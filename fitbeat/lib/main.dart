@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import './screens/exercises_screen.dart';
+import './screens/home_screen.dart';
+import './screens/history_screen.dart';
+import './screens/music_screen.dart';
+import './screens/start_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +35,11 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = const [
+    HomeScreen(),
+    HistoryScreen(),
+    StartScreen(),
     ExercisesScreen(),
+    MusicScreen(),
   ];
 
   @override
