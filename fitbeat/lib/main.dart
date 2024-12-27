@@ -44,8 +44,12 @@ class _HomePageState extends State<HomePage> {
             label: 'History',
           ),
           BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.add_circled),
+            label: 'Start',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.flame),
-            label: 'Workouts',
+            label: 'Exercises',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.double_music_note),
