@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import './screens/exercises_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-//sdsdsuhdush
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,6 +29,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
+  final List<Widget> _screens = const [
+    ExercisesScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -73,23 +77,12 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.zero,
                   child: const Icon(CupertinoIcons.profile_circled),
                   onPressed: () {
-                    // TODO: Profile page
+                    // TODO: Profile screen
                   },
                 ),
               ),
               child: SafeArea(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 24),
-                        const SizedBox(height: 24),
-                      ],
-                    ),
-                  ),
-                ),
+                child: _screens[index],
               ),
             );
           },
