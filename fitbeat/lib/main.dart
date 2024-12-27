@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return const CupertinoApp(
       title: 'FitBeat',
       theme: CupertinoThemeData(
-        primaryColor: CupertinoColors.activeBlue,
+        primaryColor: Color.fromARGB(255, 0, 64, 221),
       ),
       home: HomePage(),
     );
