@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CupertinoApp(
-      title: 'FitBeat',
+      title: 'FitBeat', 
+      debugShowCheckedModeBanner: false,
       theme: CupertinoThemeData(
         primaryColor: Color.fromARGB(255, 0, 64, 221),
       ),
@@ -80,7 +81,6 @@ class _HomePageState extends State<HomePage> {
           builder: (BuildContext context) {
             return CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
-                middle: const Text('FitBeat'),
                 trailing: CupertinoButton(
                   padding: EdgeInsets.zero,
                   child: const Icon(CupertinoIcons.profile_circled),
