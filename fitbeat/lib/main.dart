@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const CupertinoApp(
       title: 'FitBeat',
+      debugShowCheckedModeBanner: false,
       theme: CupertinoThemeData(
         primaryColor: Color.fromARGB(255, 0, 64, 221),
       ),
