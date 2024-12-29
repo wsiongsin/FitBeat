@@ -8,180 +8,124 @@ class StartScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildEmptyWorkout(),
-        buildListWorkouts()
-        // buildWorkout(),
+        _buildEmptyWorkout(),
+        _buildListWorkouts()
       ],
     );
   }
 
-  Widget buildWorkout() {
+  Widget _buildWorkout(String workoutTitle, String workoutExercises) {
     return Container(
-          decoration: BoxDecoration(
-            border: Border.all(width: 1.0, color: CupertinoColors.systemGrey3),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child:
-          Align(
-        alignment: AlignmentDirectional.topStart, 
+        decoration: BoxDecoration(
+          border: Border.all(width: 1.0, color: CupertinoColors.systemGrey3),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        width: 180,
+        height: 100,
         child: CupertinoButton(
-            onPressed: () {},
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:[
-                Text('Title', style: TextStyle(fontWeight: FontWeight.bold, color: CupertinoColors.black )),
-                Text('description', style: TextStyle(fontWeight: FontWeight.w500, color: CupertinoColors.systemGrey2)),
-              ],
-            ),
+          padding: const EdgeInsets.all(15),
+          onPressed: () {},
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(workoutTitle,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: CupertinoColors.black,
+                      fontSize: 14)),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Text(workoutExercises,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: CupertinoColors.systemGrey2,
+                        fontSize: 12)),
+              )
+            ],
           ),
-    ));
+        ));
   }
 
-  Widget _buildHeader() {
-    return const Text('top');
-    // List<Widget> workoutWidgets = [];
-
-    // // Use a loop to create multiple widgets
-    // for (int i = 0; i < 10; i++) {
-    //   workoutWidgets.add(
-    //    buildWorkout()
-    //   );
-    // }
-
-    // return Padding (
-    //     padding: const EdgeInsets.all(16),
-    //     child: Column (
-
-    //     children: [
-    //       const Text('Start Workout',
-    //           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-    //       Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-    //         CupertinoButton.filled(
-    //           onPressed: () {},
-    //           minSize: kMinInteractiveDimensionCupertino,
-    //           child: const Text('Create and start a workout',
-    //               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-    //         ),
-    //       ]),
-
-    //       const SizedBox(height: 20),
-
-    //       const Text('Workouts'),
-
-    //     SizedBox(
-    //       height: 600,
-    //     child: 
-    //     GridView.count(
-    //       crossAxisSpacing: 10,
-    //       mainAxisSpacing: 10,
-    //       crossAxisCount: 2,
-    //       primary: false,
-    //       padding: const EdgeInsets.all(20),
-    //       children: [
-    //         Container(
-    //               decoration: BoxDecoration(
-    //                 border: Border.all(
-    //                     width: 1.0, color: CupertinoColors.activeBlue),
-    //                 borderRadius: BorderRadius.circular(8),
-    //               ),
-    //               child: CupertinoButton(
-    //                 onPressed: () {},
-    //                 child: const Column(
-    //                   children: [
-    //                     Icon(CupertinoIcons.add_circled),
-    //                     Text('Add Workout'),
-    //                   ],
-    //                 ),
-    //               ),
-    //         ),
-    //         buildWorkout(),
-    //         buildWorkout(),
-    //         buildWorkout(),
-    //         buildWorkout(),
-
-    //       ])
-    //     )
-    //     ] 
-    //     )
-        
-    
-      
-    
-        // );
-  }
-
-
-Widget buildEmptyWorkout() {
-  return Padding (
-    padding: const EdgeInsets.all(14),
-    child: Column( crossAxisAlignment: CrossAxisAlignment.start,
-    children: [ 
-     const Text('Start Workout',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          Padding (
-            padding: const EdgeInsets.only(top: 10),
-            child: 
-          
- 
-          Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            CupertinoButton.filled(
-              padding: const EdgeInsets.symmetric(horizontal: 0.5, vertical: 0.2),
-              onPressed: () {},
-              child: const Text('Create and start a workout',
-
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-            ),
-             ]        )
-          )
-
-             ,
-    ]
-    )
-  );
-}
-
-
-Widget buildListWorkouts() {
-  // return Text('hi');
-  return
-  Expanded(child: 
-  Padding(padding: const EdgeInsets.all(10),
-  child: 
-    GridView.count(
-      shrinkWrap: true,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          crossAxisCount: 2,
-          primary: false,
-          children: [
-            Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 1.0, color: CupertinoColors.activeBlue),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: CupertinoButton(
-                    onPressed: () {},
-                    child: const Column(
-                      children: [
-                        Icon(CupertinoIcons.add_circled),
-                        Text('Add Workout'),
-                      ],
+  Widget _buildEmptyWorkout() {
+    return Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Text('Start Workout',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    CupertinoButton.filled(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 0.5, vertical: 0.2),
+                      onPressed: () {},
+                      child: const Text('Create and start a workout',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
                     ),
+                  ])),
+        ]));
+  }
+
+  Widget _buildListWorkouts() {
+    // return Text('hi');
+    return Expanded(
+        child: SingleChildScrollView(
+            padding: const EdgeInsets.all(10),
+            child: Wrap(spacing: 8, runSpacing: 8, children: [
+              Container(
+                decoration: BoxDecoration(
+                  border:
+                      Border.all(width: 1.0, color: CupertinoColors.activeBlue),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                width: 180,
+                height: 100,
+                child: CupertinoButton(
+                  onPressed: () {},
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(CupertinoIcons.add_circled),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Text(
+                          'Add Workout',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                      )
+                    ],
                   ),
-            ),
-            buildWorkout(),
-            buildWorkout(),
-            buildWorkout(),
-            buildWorkout(),
-            buildWorkout(),
-            buildWorkout(),
-            buildWorkout(),
-            buildWorkout(),
-            buildWorkout(),
-
-
-          ])));
-}
-
+                ),
+              ),
+              _buildWorkout('Legs',
+                  'Squat, Leg Press, Leg Extension, Standing Calf Raise'),
+              _buildWorkout('Chest and Triceps',
+                  'Bench Press, Incline Bench Press, Strict Military Press'),
+              _buildWorkout('Back and Biceps',
+                  'Deadlift, Seated Row, Lat Pulldowns, Bicep Curls'),
+              _buildWorkout('Abs and Core',
+                  'Plank, Deadbugs, Russian Twists, Mountain Climbers'),
+              _buildWorkout('Abs and Core',
+                  'Plank, Deadbugs, Russian Twists, Mountain Climbers'),
+              _buildWorkout('Abs and Core',
+                  'Plank, Deadbugs, Russian Twists, Mountain Climbers'),
+              _buildWorkout('Abs and Core',
+                  'Plank, Deadbugs, Russian Twists, Mountain Climbers'),
+              _buildWorkout('Abs and Core',
+                  'Plank, Deadbugs, Russian Twists, Mountain Climbers'),
+              _buildWorkout('Abs and Core',
+                  'Plank, Deadbugs, Russian Twists, Mountain Climbers'),
+              _buildWorkout('Abs and Core',
+                  'Plank, Deadbugs, Russian Twists, Mountain Climbers'),
+              _buildWorkout('Abs and Core',
+                  'Plank, Deadbugs, Russian Twists, Mountain Climbers'),
+              _buildWorkout('Abs and Core',
+                  'Plank, Deadbugs, Russian Twists, Mountain Climbers'),
+            ])));
+  }
 }
