@@ -77,10 +77,12 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
   }
 
   Future<void> fetchExercises() async {
+    if (mounted) {
     setState(() {
       isLoading = true;
       error = null;
     });
+    }
 
     var url = 'https://exercisedb.p.rapidapi.com/exercises?limit=0&offset=0';
 
@@ -96,6 +98,7 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        if (mounted) {
         setState(() {
           exercises = data.where((exercise) {
             final matchesTarget =
@@ -106,14 +109,17 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
           }).toList();
           isLoading = false;
         });
+        }
       } else {
         throw Exception('Failed to load exercises');
       }
     } catch (e) {
+      if (mounted) {
       setState(() {
         error = 'Error fetching exercises: $e';
         isLoading = false;
       });
+      }
     }
   }
 
