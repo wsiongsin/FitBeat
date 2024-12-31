@@ -91,7 +91,8 @@ return
             if (mounted) {
             setState(() {
             _selectedIndex = index;
-            });}},
+          });
+      }},
             index: _selectedIndex,
           children: [
             buildButton('Home', BootstrapIcons.house),
@@ -102,7 +103,40 @@ return
           ],
         ),
       ],
-        child: SafeArea(child: screens[_selectedIndex]),
+         // Use CupertinoTabView for the main body content
+    child: SafeArea(
+      child: CupertinoTabView(
+        builder: (BuildContext context) {
+          return CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min, // Align buttons in a row
+                children: [
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: const Icon(CupertinoIcons.bell),
+                    onPressed: () {
+                      // TODO: Navigate to notification screen
+                    },
+                  ),
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: const Icon(CupertinoIcons.profile_circled),
+                    onPressed: () {
+                      // TODO: Navigate to profile screen
+                    },
+                  ),
+                ],
+              ),
+            ),
+            child: SafeArea(
+              // Render the currently selected screen
+              child: screens[_selectedIndex],
+            ),
+          );
+        },
+      )
+    )
   ));
 }
 }

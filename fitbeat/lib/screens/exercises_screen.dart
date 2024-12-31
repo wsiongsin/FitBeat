@@ -135,7 +135,7 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(30),
                     child: Image.network(
                       exercise['gifUrl'],
                       height: 200,
@@ -161,7 +161,8 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
                 const SizedBox(height: 8),
                 Text(
                   (exercise['instructions'] as List).join('\n\n'),
-                  style: const TextStyle(height: 1.5),
+                  style: const TextStyle(height: 1),
+                  textAlign: TextAlign.left,
                 ),
               ],
             ),
