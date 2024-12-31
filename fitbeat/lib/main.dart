@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CupertinoApp(
-      title: 'FitBeat', 
+      title: 'FitBeat',
       debugShowCheckedModeBanner: false,
       theme: CupertinoThemeData(
         primaryColor: Color.fromARGB(255, 0, 64, 221),
@@ -81,12 +81,25 @@ class _HomePageState extends State<HomePage> {
           builder: (BuildContext context) {
             return CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
-                trailing: CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  child: const Icon(CupertinoIcons.profile_circled),
-                  onPressed: () {
-                    // TODO: Profile screen
-                  },
+                trailing: Row(
+                  mainAxisSize: MainAxisSize
+                      .min, // Align buttons in a row and make sure they take minimum space
+                  children: [
+                    CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: const Icon(CupertinoIcons.bell),
+                      onPressed: () {
+                        // TODO: Navigate notification screen
+                      },
+                    ),
+                    CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: const Icon(CupertinoIcons.profile_circled),
+                      onPressed: () {
+                        // TODO: Navigate to profile screen
+                      },
+                    ),
+                  ],
                 ),
               ),
               child: SafeArea(
