@@ -7,19 +7,24 @@ import './screens/music_screen.dart';
 import './screens/start_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
   @override
   Widget build(BuildContext context) {
     return ShadcnApp(
       title: 'FitBeat', 
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
-      theme: ThemeData(colorScheme: ColorSchemes.lightZinc(), radius: 1.1)
+      navigatorObservers: [routeObserver],
+      home: HomePage(routeObserver: routeObserver),
+      theme: ThemeData(colorScheme: ColorSchemes.lightSlate(), radius: 1.1,
+      surfaceBlur: 19,),
+    
     );
   //  return const CupertinoApp(
   //     title: 'FitBeat', 
@@ -34,7 +39,11 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+
+  final RouteObserver<PageRoute> routeObserver;
+
+  const HomePage({required this.routeObserver, super.key});
+
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -43,14 +52,36 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   
   int _selectedIndex = 0;
+  bool _isNavBarVisible = true;
 
-  final List<Widget> screens = const [
+  late List<Widget> screens;
+
+
+  void showNavbar() {
+    setState(() {
+      _isNavBarVisible = true;
+    });
+  }
+
+  void hideNavbar() {
+    setState(() {
+      _isNavBarVisible = false;
+    });
+  }
+
+
+@override void initState() {
+  super.initState();
+  screens  = [
     HomeScreen(),
     HistoryScreen(),
-    StartScreen(),
+    StartScreen(showNavbar: showNavbar, hideNavbar: hideNavbar),
     ExercisesScreen(),
     MusicScreen(),
   ];
+}
+
+
   
 
 NavigationBarAlignment alignment = NavigationBarAlignment.spaceAround;
@@ -81,7 +112,7 @@ return
     width: 500,
     height: 400,
     child: Scaffold(
-      footers: [
+      footers: _isNavBarVisible ? [
         const Divider(),
         NavigationBar(
           alignment: alignment,
@@ -102,7 +133,7 @@ return
             buildButton('Music', BootstrapIcons.musicNote),
           ],
         ),
-      ],
+      ] : [],
          // Use CupertinoTabView for the main body content
     child: SafeArea(
       child: CupertinoTabView(

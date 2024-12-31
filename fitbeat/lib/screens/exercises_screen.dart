@@ -92,7 +92,7 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
         headers: {
           'x-rapidapi-host': 'exercisedb.p.rapidapi.com',
           'x-rapidapi-key':
-              'a4f124151emsh69a768d8c7c555ep132412jsn5b9732ed3762',
+              '8c93546fa6msha70544334442399p1c16c5jsn25a315b8ab15',
         },
       );
 
@@ -135,7 +135,7 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(8),
                     child: Image.network(
                       exercise['gifUrl'],
                       height: 200,
@@ -161,8 +161,7 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
                 const SizedBox(height: 8),
                 Text(
                   (exercise['instructions'] as List).join('\n\n'),
-                  style: const TextStyle(height: 1),
-                  textAlign: TextAlign.left,
+                  style: const TextStyle(height: 1.5),
                 ),
               ],
             ),
