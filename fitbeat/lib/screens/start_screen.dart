@@ -273,6 +273,8 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
+    
+
     return CupertinoPageScaffold(
         child: Column(children: [
       //       Row(children: [
@@ -305,49 +307,115 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
               padding: EdgeInsets.symmetric(horizontal: 8),
               child: exercises.isEmpty
                   ? Center(
-                    child: Text(
+                      child: Text(
                       'Add an exercise to get started',
                       style: TextStyle(color: Colors.gray[300]),
                     ).small().semiBold())
-                  : ListView(
-                      children: exercises.map((item) {
-                        return Card(
-                            child: Column(children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(item.name).xSmall().bold(),
-                                IconButton.destructive(
-                                  icon: Icon(RadixIcons.cross2),
-                                  onPressed: () {},
-                                  shape: ButtonShape.circle,
-                                )
-                              ]),
-                          item.sets?.isEmpty ?? true
-                              ? Center(child: Text('No items available'))
-                              : Column(
-                                  children: item.sets!.map((set) {
-                                    return Text(
-                                        'Reps: ${set.reps}, Weight: ${set.weight}');
-                                  }).toList(), // Convert map to list here
-                                ),
-                        ]));
-                      }).toList(), // Convert the Iterable to a List
-                    ))),
+                  : Column(children: [
+                      Expanded(
+                       child: ListView.builder(
+  itemCount: exercises.length,
+  itemBuilder: (context, index) {
+    return _exerciseCard(exercises[index]); // Return the widget for each exercise
+  }, // Convert the Iterable to a List
+                      ))
+                    ])
+                    )),
       Container(
-         decoration: BoxDecoration(
-          color: Colors.transparent
-        ),
+          decoration: BoxDecoration(color: Colors.transparent),
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               OutlineButton(
                 child: Text('Cancel'),
-                onPressed: () {Navigator.pop(context);},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ],
           ))
     ]));
   }
+
+  Widget _exerciseCard (Exercise exercise) {
+    double value = 0;
+      return Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Card(
+                                      child: Column(children: [
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(exercise.name).xSmall().bold(),
+                                          Container(
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.red[400]),
+                                              child: OutlineButton(
+                                                  shape: ButtonShape.circle,
+                                                  size: ButtonSize.small,
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      exercises.remove(
+                                                          exercise); // Remove the exercise
+                                                    });
+                                                  },
+                                                  child: Icon(
+                                                    RadixIcons.cross2,
+                                                    color: Colors.white,
+                                                  )))
+                                        ]),
+                                    exercise.sets?.isEmpty ?? true
+                                        ? Center(
+                                            child: Text('No items available'))
+                                        : Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: List.generate(
+                                                exercise.sets!.length, (index) {
+                                              var set = exercise.sets![index];
+                                              return Column(children: [
+                                                Row(children: [
+                                                  Text('Set $index',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                      .neutral[
+                                                                  400]))
+                                                      .xSmall()
+                                                      .bold()
+                                                ]),
+                                                Row(children: [
+                                                  Expanded(
+                                                    child:
+                                                      NumberInput(
+                                                      initialValue: value,
+                                                      onChanged: (newValue) {
+                                                        setState(() {
+                                                          value = newValue;
+                                                        });
+                                                      },
+                                                  )),
+                                                  Expanded(
+                                                      child: Transform.scale(
+                                                          scale: 0.8,
+                                                          child: TextField(
+                                                              placeholder: Text(
+                                                                  'Weights')))),
+                                                  // SizedBox (
+                                                  //   width: 200,
+                                                  //   child:
+                                                  //   Transform.scale (scale: 0.7, child:
+                                                  // TextField(
+                                                  //   placeholder: Text('Enter your name'))))
+                                                ])
+                                              ]);
+                                            }).toList(), // Convert map to list here
+                                          ),
+                                  ]).withPadding(right: 0, left: 8)))
+                              .withPadding(all: 8);
 }
+}
+
+
