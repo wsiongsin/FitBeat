@@ -335,7 +335,9 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                   ),
                   PrimaryButton(
                     child: Text('Finish'),
-                    onPressed: () {Navigator.pop(context);},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   )
                 ],
               ))
@@ -345,11 +347,10 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
   Widget _exerciseCard(Exercise exercise) {
     return Card(
             child: Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Expanded(child: 
-        Text(exercise.name).xSmall().bold(),
-          ),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Expanded(
+          child: Text(exercise.name).xSmall().bold(),
+        ),
         Container(
             decoration:
                 BoxDecoration(shape: BoxShape.circle, color: Colors.red[400]),
@@ -374,7 +375,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                 var set = exercise.sets![index];
                 return Column(children: [
                   Row(children: [
-                    Text('Set ${index+1}',
+                    Text('Set ${index + 1}',
                             style: TextStyle(color: Colors.neutral[400]))
                         .xSmall()
                         .bold()
@@ -412,20 +413,19 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                                       })
                                 ]))),
                   ]),
-                 
                 ]);
-              }).toList(), 
-              
-          ),
-             PrimaryButton(
-              leading: const Icon(Icons.add),
-              size: ButtonSize.small,
-              onPressed: () async {
-                setState(() {
-                  exercise.sets?.add(Set(0.0, 0.0));
-                });
-              },
-              child: const Text('Add Set'),)
+              }).toList(),
+            ),
+      PrimaryButton(
+        leading: const Icon(Icons.add),
+        size: ButtonSize.small,
+        onPressed: () async {
+          setState(() {
+            exercise.sets?.add(Set(0.0, 0.0));
+          });
+        },
+        child: const Text('Add Set'),
+      )
     ]).withPadding(right: 0, left: 8))
         .withPadding(all: 8);
   }
