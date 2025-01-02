@@ -191,7 +191,8 @@ class _ExercisesPageState extends State<ExercisesPage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-        child: Column(
+        child: SafeArea (
+          child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildHeader(),
@@ -202,7 +203,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
         ),
         _buildActions(),
       ],
-    ));
+    )));
   }
 
   Widget _buildHeader() {
@@ -534,7 +535,8 @@ class _ExercisesPageState extends State<ExercisesPage> {
     ? PrimaryButton(
         child: Text('Add ${exerciseCount}'),
         onPressed: () => {Navigator.pop(context, exerciseList)})
-    : SecondaryButton(child: Text('Add'))]
-    );
+    : SecondaryButton(child: Text('Add'))
+    ]
+    ).withPadding(right: 20);
   }
 }

@@ -132,7 +132,12 @@ class StartScreen extends StatelessWidget {
   }
 
   Widget _buildEmptyWorkout(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+
+    return 
+     CupertinoPageScaffold(
+      resizeToAvoidBottomInset: false,
+      child: 
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Text('Start Workout',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           Padding(
@@ -145,22 +150,32 @@ class StartScreen extends StatelessWidget {
                         shape: ButtonShape.rectangle,
                         child: const Text('Start a workout').small(),
                         onPressed: () {
-                          hideNavbar();
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => CreateWorkoutPage(
-                                showNavbar: showNavbar,
-                              ),
-                            ),
-                          );
+                          // hideNavbar()
+                          _chooseWorkout(context);
+                          
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //     builder: (context) => CreateWorkoutPage(
+                          //       showNavbar: showNavbar,
+                          //     ),
+                          //   ),
+                          // );
                         })
                   ]))
-        ]).withPadding(all: 15);
+        ]).withPadding(all: 15));
   }
 
+  void _chooseWorkout(BuildContext context) {
+  
+     showCupertinoModalPopup(
+      context: context,
+      useRootNavigator: true,
+      builder: (context) => ChooseWorkoutScreen());
+    }
+
+  
   Widget _listWeightWorkouts(BuildContext context) {
-    // return Text('hi');
     return Expanded(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text('Weight Training').bold().withPadding(bottom: 5),
@@ -234,7 +249,6 @@ class StartScreen extends StatelessWidget {
   }
 
    Widget _listIntervalWorkouts(BuildContext context) {
-    // return Text('hi');
     return Expanded(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text('Interval Training').bold().withPadding(bottom: 5),
@@ -352,9 +366,11 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        resizeToAvoidBottomInset: false,
-        child: Column(children: [
+    return 
+    CupertinoPageScaffold(
+      resizeToAvoidBottomInset: false,
+        child: SafeArea(child: 
+        Column(children: [
           PrimaryButton(
               leading: const Icon(Icons.add),
               child: const Text('Add Exercise'),
@@ -390,7 +406,6 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                         ]))),
           Container(
               decoration: BoxDecoration(color: Colors.transparent),
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -409,7 +424,8 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                   )
                 ],
               ))
-        ]));
+        ]).withPadding(horizontal: 15)
+    ));
   }
 
   Widget _exerciseCard(Exercise exercise) {
@@ -497,4 +513,44 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
     ]).withPadding(right: 0, left: 8))
         .withPadding(all: 8);
   }
+}
+
+// -----------------------ACTION SHEET-----------------------
+
+class ChooseWorkoutScreen extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+return
+    Container(
+      decoration: BoxDecoration(
+        color: CupertinoColors.systemBackground,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+                Text(
+                  'Select Workout Mode',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+            ]).withPadding(bottom: 15),
+          PrimaryButton(child: Text('Weight Training'), onPressed: (){
+              Navigator.pop(context); 
+           Navigator.of(context, rootNavigator: true).push(
+  CupertinoPageRoute(builder: (context) => CreateWorkoutPage(showNavbar: () {})),
+);
+          }).withPadding(bottom: 15),
+          PrimaryButton(child: Text('Interval Training'), onPressed: (){}),
+        ],
+      ).withPadding(horizontal: 20, top: 20, bottom: 40)
+      );
+  }
+
+
 }
