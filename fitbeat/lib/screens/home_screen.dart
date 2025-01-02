@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import './start_screen.dart';
-import 'package:fitbeat/main.dart';
 
 // Enum to identify widget types
 enum DashboardWidgetType {
