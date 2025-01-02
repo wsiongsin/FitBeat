@@ -93,7 +93,7 @@ class StartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [_buildEmptyWorkout(context), _buildListWorkouts(context)],
+      children: [_buildEmptyWorkout(context), _listWeightWorkouts(context), _listIntervalWorkouts(context)],
     );
   }
 
@@ -104,7 +104,7 @@ class StartScreen extends StatelessWidget {
   Widget _buildWorkout(String workoutTitle, List<Exercise> workoutExercises,
       BuildContext context) {
     return SizedBox(
-        width: 180,
+        width: 170,
         height: 100,
         child: CardButton(
           onPressed: () => _showWorkoutExercises(workoutExercises, context),
@@ -112,27 +112,27 @@ class StartScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(workoutTitle,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: CupertinoColors.black,
-                      fontSize: 14)),
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Text(generateExerciseList(workoutExercises),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: CupertinoColors.systemGrey2,
-                        fontSize: 12)),
-              )
+                      fontSize: 14)
+                  ),
+
+              Text(generateExerciseList(workoutExercises),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: CupertinoColors.systemGrey2,
+                          fontSize: 12))
+                  .withPadding(top: 5),
             ],
           ),
         ));
   }
 
   Widget _buildEmptyWorkout(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(14),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Text('Start Workout',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           Padding(
@@ -156,77 +156,155 @@ class StartScreen extends StatelessWidget {
                           );
                         })
                   ]))
-        ]));
+        ]).withPadding(all: 15);
   }
 
-  Widget _buildListWorkouts(BuildContext context) {
+  Widget _listWeightWorkouts(BuildContext context) {
     // return Text('hi');
     return Expanded(
-        child: SingleChildScrollView(
-            padding: const EdgeInsets.all(10),
-            child: Wrap(spacing: 8, runSpacing: 8, children: [
-              SizedBox(
-                width: 180,
-                height: 100,
-                child: CardButton(
-                  onPressed: () {
-                    hideNavbar();
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => AddWorkoutPage(
-                          hideNavbar: hideNavbar,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(BootstrapIcons.plusCircleFill),
-                      Padding(
-                        padding: EdgeInsets.only(top: 5),
-                        child: Text('Add Workout').bold(),
-                      )
-                    ],
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text('Weight Training').bold().withPadding(bottom: 5),
+      Expanded(
+          child: SingleChildScrollView(
+              child: Wrap(spacing: 8, runSpacing: 8, children: [
+        SizedBox(
+          width: 170,
+          height: 100,
+          child: CardButton(
+            onPressed: () {
+              hideNavbar();
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => AddWorkoutPage(
+                    hideNavbar: hideNavbar,
                   ),
                 ),
-              ),
-              _buildWorkout(
-                  'Legs',
-                  [
-                    Exercise('2368', 'Split Squat'),
-                    Exercise('0054', 'Lunges'),
-                    Exercise('0760', 'Leg Press'),
-                    Exercise('1459', 'RDLs')
-                  ],
-                  context),
-              _buildWorkout(
-                  'Chest and Shoulder',
-                  [
-                    Exercise('0025', 'Bench Press'),
-                    Exercise('1456', 'Military Press'),
-                    Exercise('0178', 'Lateral Raises')
-                  ],
-                  context),
-              _buildWorkout(
-                  'Back and Biceps',
-                  [
-                    Exercise('0160', 'Seated Row'),
-                    Exercise('1429', 'Pull Ups'),
-                    Exercise('0285', 'Bicep Curls')
-                  ],
-                  context),
-              _buildWorkout(
-                  'Abs and Core',
-                  [
-                    Exercise('0464', 'Plank'),
-                    Exercise('0687', 'Russian Twists'),
-                    Exercise('3699', 'Shoulder Taps')
-                  ],
-                  context),
-            ])));
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(BootstrapIcons.plusCircleFill),
+                Padding(
+                  padding: EdgeInsets.only(top: 5),
+                  child: Text('Add Workout').bold(),
+                )
+              ],
+            ),
+          ),
+        ),
+        _buildWorkout(
+            'Legs',
+            [
+              Exercise('2368', 'Split Squat'),
+              Exercise('0054', 'Lunges'),
+              Exercise('0760', 'Leg Press'),
+              Exercise('1459', 'RDLs')
+            ],
+            context),
+
+        _buildWorkout(
+            'Chest and Shoulder',
+            [
+              Exercise('0025', 'Bench Press'),
+              Exercise('1456', 'Military Press'),
+              Exercise('0178', 'Lateral Raises')
+            ],
+            context),
+        _buildWorkout(
+            'Back and Biceps',
+            [
+              Exercise('0160', 'Seated Row'),
+              Exercise('1429', 'Pull Ups'),
+              Exercise('0285', 'Bicep Curls')
+            ],
+            context),
+        _buildWorkout(
+            'Abs and Core',
+            [
+              Exercise('0464', 'Plank'),
+              Exercise('0687', 'Russian Twists'),
+              Exercise('3699', 'Shoulder Taps')
+            ],
+            context),
+      ])))
+    ]).withPadding(horizontal: 15).withMargin(bottom: 15));
+  }
+
+   Widget _listIntervalWorkouts(BuildContext context) {
+    // return Text('hi');
+    return Expanded(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text('Interval Training').bold().withPadding(bottom: 5),
+      Expanded(
+          child: SingleChildScrollView(
+              child: Wrap(spacing: 8, runSpacing: 8, children: [
+        SizedBox(
+          width: 170,
+          height: 100,
+          child: CardButton(
+            onPressed: () {
+              hideNavbar();
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => AddWorkoutPage(
+                    hideNavbar: hideNavbar,
+                  ),
+                ),
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(BootstrapIcons.plusCircleFill),
+                Padding(
+                  padding: EdgeInsets.only(top: 5),
+                  child: Text('Add Workout').bold(),
+                )
+              ],
+            ),
+          ),
+        ),
+        _buildWorkout(
+            'Legs',
+            [
+              Exercise('2368', 'Split Squat'),
+              Exercise('0054', 'Lunges'),
+              Exercise('0760', 'Leg Press'),
+              Exercise('1459', 'RDLs')
+            ],
+            context),
+
+        _buildWorkout(
+            'Chest and Shoulder',
+            [
+              Exercise('0025', 'Bench Press'),
+              Exercise('1456', 'Military Press'),
+              Exercise('0178', 'Lateral Raises')
+            ],
+            context),
+        _buildWorkout(
+            'Back and Biceps',
+            [
+              Exercise('0160', 'Seated Row'),
+              Exercise('1429', 'Pull Ups'),
+              Exercise('0285', 'Bicep Curls')
+            ],
+            context),
+        _buildWorkout(
+            'Abs and Core',
+            [
+              Exercise('0464', 'Plank'),
+              Exercise('0687', 'Russian Twists'),
+              Exercise('3699', 'Shoulder Taps')
+            ],
+            context),
+      ])))
+    ]).withPadding(horizontal: 15, bottom: 15));
   }
 }
 
@@ -277,16 +355,6 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
     return CupertinoPageScaffold(
         resizeToAvoidBottomInset: false,
         child: Column(children: [
-          //       Row(children: [
-          //         Row (children: [
-          //           GhostButton(
-          //   onPressed: () {},
-          //   trailing: const Icon(RadixIcons.pencil1),
-          //   child: Text(workoutName),
-          // ),
-          //         ])
-          //       ],),
-
           PrimaryButton(
               leading: const Icon(Icons.add),
               child: const Text('Add Exercise'),
@@ -301,7 +369,6 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                   });
                 }
               }).withMargin(top: 40),
-
           Expanded(
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
@@ -330,12 +397,15 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                   OutlineButton(
                     child: Text('Cancel'),
                     onPressed: () {
+                      widget.showNavbar();
                       Navigator.pop(context);
                     },
                   ),
                   PrimaryButton(
                     child: Text('Finish'),
-                    onPressed: () {Navigator.pop(context);},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   )
                 ],
               ))
@@ -345,11 +415,10 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
   Widget _exerciseCard(Exercise exercise) {
     return Card(
             child: Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Expanded(child: 
-        Text(exercise.name).xSmall().bold(),
-          ),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Expanded(
+          child: Text(exercise.name).xSmall().bold(),
+        ),
         Container(
             decoration:
                 BoxDecoration(shape: BoxShape.circle, color: Colors.red[400]),
@@ -374,7 +443,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                 var set = exercise.sets![index];
                 return Column(children: [
                   Row(children: [
-                    Text('Set ${index+1}',
+                    Text('Set ${index + 1}',
                             style: TextStyle(color: Colors.neutral[400]))
                         .xSmall()
                         .bold()
@@ -412,20 +481,19 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                                       })
                                 ]))),
                   ]),
-                 
                 ]);
-              }).toList(), 
-              
-          ),
-             PrimaryButton(
-              leading: const Icon(Icons.add),
-              size: ButtonSize.small,
-              onPressed: () async {
-                setState(() {
-                  exercise.sets?.add(Set(0.0, 0.0));
-                });
-              },
-              child: const Text('Add Set'),)
+              }).toList(),
+            ),
+      PrimaryButton(
+        leading: const Icon(Icons.add),
+        size: ButtonSize.small,
+        onPressed: () async {
+          setState(() {
+            exercise.sets?.add(Set(0.0, 0.0));
+          });
+        },
+        child: const Text('Add Set'),
+      )
     ]).withPadding(right: 0, left: 8))
         .withPadding(all: 8);
   }
