@@ -179,7 +179,9 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return CupertinoPageScaffold(
+      resizeToAvoidBottomInset: false,
+      child: Column (
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildHeader(),
@@ -189,7 +191,7 @@ class _ExercisesScreenState extends State<ExercisesScreen> {
           child: _buildExercisesList(),
         ),
       ],
-    );
+    ));
   }
 
   Widget _buildHeader() {

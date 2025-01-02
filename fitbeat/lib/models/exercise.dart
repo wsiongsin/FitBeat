@@ -11,8 +11,8 @@ class Exercise {
 
 
 class Set {
-  int reps = 0;
-  int weight = 0;
+  double reps = 0;
+  double weight = 0;
 
   Set(this.reps, this.weight);
 }

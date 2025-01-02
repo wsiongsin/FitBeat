@@ -241,6 +241,7 @@ class AddWorkoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+        resizeToAvoidBottomInset: false,
         navigationBar: CupertinoNavigationBar(
           leading: CupertinoButton(
             padding: EdgeInsets.zero,
@@ -273,149 +274,159 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return CupertinoPageScaffold(
+        resizeToAvoidBottomInset: false,
         child: Column(children: [
-      //       Row(children: [
-      //         Row (children: [
-      //           GhostButton(
-      //   onPressed: () {},
-      //   trailing: const Icon(RadixIcons.pencil1),
-      //   child: Text(workoutName),
-      // ),
-      //         ])
-      //       ],),
+          //       Row(children: [
+          //         Row (children: [
+          //           GhostButton(
+          //   onPressed: () {},
+          //   trailing: const Icon(RadixIcons.pencil1),
+          //   child: Text(workoutName),
+          // ),
+          //         ])
+          //       ],),
 
-      PrimaryButton(
-          leading: const Icon(Icons.add),
-          child: const Text('Add Exercise'),
-          onPressed: () async {
-            final result = await Navigator.push(context,
-                CupertinoPageRoute(builder: (context) => ExercisesPage()));
+          PrimaryButton(
+              leading: const Icon(Icons.add),
+              child: const Text('Add Exercise'),
+              onPressed: () async {
+                final result = await Navigator.push(context,
+                    CupertinoPageRoute(builder: (context) => ExercisesPage()));
 
-            if (result != null) {
-              // If exercises list is updated, update the state of this page
-              setState(() {
-                exercises.addAll(result);
-              });
-            }
-          }).withMargin(top: 40),
+                if (result != null) {
+                  // If exercises list is updated, update the state of this page
+                  setState(() {
+                    exercises.addAll(result);
+                  });
+                }
+              }).withMargin(top: 40),
 
-      Expanded(
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: exercises.isEmpty
-                  ? Center(
-                      child: Text(
-                      'Add an exercise to get started',
-                      style: TextStyle(color: Colors.gray[300]),
-                    ).small().semiBold())
-                  : Column(children: [
-                      Expanded(
-                       child: ListView.builder(
-  itemCount: exercises.length,
-  itemBuilder: (context, index) {
-    return _exerciseCard(exercises[index]); // Return the widget for each exercise
-  }, // Convert the Iterable to a List
-                      ))
-                    ])
-                    )),
-      Container(
-          decoration: BoxDecoration(color: Colors.transparent),
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              OutlineButton(
-                child: Text('Cancel'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ))
-    ]));
+          Expanded(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: exercises.isEmpty
+                      ? Center(
+                          child: Text(
+                          'Add an exercise to get started',
+                          style: TextStyle(color: Colors.gray[300]),
+                        ).small().semiBold())
+                      : Column(children: [
+                          Expanded(
+                              child: ListView.builder(
+                            itemCount: exercises.length,
+                            itemBuilder: (context, index) {
+                              return _exerciseCard(exercises[
+                                  index]); // Return the widget for each exercise
+                            }, // Convert the Iterable to a List
+                          ))
+                        ]))),
+          Container(
+              decoration: BoxDecoration(color: Colors.transparent),
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  OutlineButton(
+                    child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  PrimaryButton(
+                    child: Text('Finish'),
+                    onPressed: () {Navigator.pop(context);},
+                  )
+                ],
+              ))
+        ]));
   }
 
-  Widget _exerciseCard (Exercise exercise) {
-    double value = 0;
-      return Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Card(
-                                      child: Column(children: [
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(exercise.name).xSmall().bold(),
-                                          Container(
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.red[400]),
-                                              child: OutlineButton(
-                                                  shape: ButtonShape.circle,
-                                                  size: ButtonSize.small,
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      exercises.remove(
-                                                          exercise); // Remove the exercise
-                                                    });
-                                                  },
-                                                  child: Icon(
-                                                    RadixIcons.cross2,
-                                                    color: Colors.white,
-                                                  )))
-                                        ]),
-                                    exercise.sets?.isEmpty ?? true
-                                        ? Center(
-                                            child: Text('No items available'))
-                                        : Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            children: List.generate(
-                                                exercise.sets!.length, (index) {
-                                              var set = exercise.sets![index];
-                                              return Column(children: [
-                                                Row(children: [
-                                                  Text('Set $index',
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                      .neutral[
-                                                                  400]))
-                                                      .xSmall()
-                                                      .bold()
-                                                ]),
-                                                Row(children: [
-                                                  Expanded(
-                                                    child:
-                                                      NumberInput(
-                                                      initialValue: value,
-                                                      onChanged: (newValue) {
-                                                        setState(() {
-                                                          value = newValue;
-                                                        });
-                                                      },
-                                                  )),
-                                                  Expanded(
-                                                      child: Transform.scale(
-                                                          scale: 0.8,
-                                                          child: TextField(
-                                                              placeholder: Text(
-                                                                  'Weights')))),
-                                                  // SizedBox (
-                                                  //   width: 200,
-                                                  //   child:
-                                                  //   Transform.scale (scale: 0.7, child:
-                                                  // TextField(
-                                                  //   placeholder: Text('Enter your name'))))
-                                                ])
-                                              ]);
-                                            }).toList(), // Convert map to list here
-                                          ),
-                                  ]).withPadding(right: 0, left: 8)))
-                              .withPadding(all: 8);
+  Widget _exerciseCard(Exercise exercise) {
+    return Card(
+            child: Column(children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Expanded(child: 
+        Text(exercise.name).xSmall().bold(),
+          ),
+        Container(
+            decoration:
+                BoxDecoration(shape: BoxShape.circle, color: Colors.red[400]),
+            child: OutlineButton(
+                shape: ButtonShape.circle,
+                size: ButtonSize.xSmall,
+                onPressed: () {
+                  setState(() {
+                    exercises.remove(exercise); // Remove the exercise
+                  });
+                },
+                child: Icon(
+                  RadixIcons.cross2,
+                  color: Colors.white,
+                )))
+      ]),
+      exercise.sets?.isEmpty ?? true
+          ? Center(child: Text('No items available'))
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: List.generate(exercise.sets!.length, (index) {
+                var set = exercise.sets![index];
+                return Column(children: [
+                  Row(children: [
+                    Text('Set ${index+1}',
+                            style: TextStyle(color: Colors.neutral[400]))
+                        .xSmall()
+                        .bold()
+                  ]).withMargin(top: 8),
+                  Row(children: [
+                    Expanded(
+                        child: Transform.scale(
+                            scale: 0.7,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Reps').medium(),
+                                NumberInput(
+                                    initialValue: 0,
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        set.reps = newValue;
+                                      });
+                                    })
+                              ],
+                            ))),
+                    Expanded(
+                        child: Transform.scale(
+                            scale: 0.7,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Weight/Time').medium(),
+                                  NumberInput(
+                                      initialValue: 0,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          set.weight = newValue;
+                                        });
+                                      })
+                                ]))),
+                  ]),
+                 
+                ]);
+              }).toList(), 
+              
+          ),
+             PrimaryButton(
+              leading: const Icon(Icons.add),
+              size: ButtonSize.small,
+              onPressed: () async {
+                setState(() {
+                  exercise.sets?.add(Set(0.0, 0.0));
+                });
+              },
+              child: const Text('Add Set'),)
+    ]).withPadding(right: 0, left: 8))
+        .withPadding(all: 8);
+  }
 }
-}
-
-

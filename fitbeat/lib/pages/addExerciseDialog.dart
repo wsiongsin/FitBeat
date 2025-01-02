@@ -511,12 +511,7 @@ class _ExercisesPageState extends State<ExercisesPage> {
                         if (!exerciseList.any((ex) => ex.name == exercise['name'])) {
                           exerciseCount++;
                           exerciseList.add(Exercise('0000', exercise['name'],
-                              sets: [
-                                Set(1, 10),
-                                Set(1, 10),
-                                Set(1, 10),
-                                Set(1, 10)
-                              ]));
+                              sets: [Set(0.0, 0.0)]));
                         }
                         else {
                           exerciseList.removeWhere((ex) => ex.name == exercise['name']);
