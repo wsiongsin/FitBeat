@@ -5,8 +5,17 @@ import './screens/home_screen.dart';
 import './screens/history_screen.dart';
 import './screens/music_screen.dart';
 import './screens/start_screen.dart';
+import './screens/sign_in_screen.dart';
+import '../services/auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import './screens/profile_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -21,12 +30,41 @@ class MyApp extends StatelessWidget {
       title: 'FitBeat',
       debugShowCheckedModeBanner: false,
       navigatorObservers: [routeObserver],
-      home: HomePage(routeObserver: routeObserver),
+      home: AuthWrapper(),
       theme: ThemeData(
         colorScheme: ColorSchemes.lightSlate(),
         radius: 1.1,
         surfaceBlur: 19,
       ),
+    );
+  }
+}
+
+class AuthWrapper extends StatefulWidget {
+  const AuthWrapper({Key? key}) : super(key: key);
+
+  @override
+  _AuthWrapperState createState() => _AuthWrapperState();
+}
+
+class _AuthWrapperState extends State<AuthWrapper> {
+  final AuthService _authService = AuthService();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: _authService.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CupertinoActivityIndicator();
+        } else {
+          if (snapshot.hasData) {
+            return HomePage(routeObserver: RouteObserver<PageRoute>());
+          } else {
+            return const SignInScreen();
+          }
+        }
+      },
     );
   }
 }
@@ -119,13 +157,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ]
                 : [],
-            // Use CupertinoTabView for the main body content
             child: SafeArea(child: CupertinoTabView(
               builder: (BuildContext context) {
                 return CupertinoPageScaffold(
                   navigationBar: CupertinoNavigationBar(
                     trailing: Row(
-                      mainAxisSize: MainAxisSize.min, // Align buttons in a row
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         CupertinoButton(
                           padding: EdgeInsets.zero,
@@ -138,14 +175,17 @@ class _HomePageState extends State<HomePage> {
                           padding: EdgeInsets.zero,
                           child: const Icon(CupertinoIcons.profile_circled),
                           onPressed: () {
-                            // TODO: Navigate to profile screen
+                            Navigator.of(context).push(
+                              CupertinoPageRoute(
+                                builder: (context) => ProfileScreen(),
+                              ),
+                            );
                           },
                         ),
                       ],
                     ),
                   ),
                   child: SafeArea(
-                    // Render the currently selected screen
                     child: screens[_selectedIndex],
                   ),
                 );

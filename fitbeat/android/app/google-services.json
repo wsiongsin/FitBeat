@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "833261845258",
+    "project_id": "fitbeat-firebase-auth",
+    "storage_bucket": "fitbeat-firebase-auth.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833261845258:android:f84712a760b97e83b498f3",
+        "android_client_info": {
+          "package_name": "com.example.fitbeat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-r0TJckR_lzLKqTRuYWtiHCg4uO5mTHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
