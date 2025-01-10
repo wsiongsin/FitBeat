@@ -16,3 +16,25 @@ class Set {
 
   Set(this.reps, this.weight);
 }
+
+
+enum StepType {
+  rest,
+  recover,
+  run,
+}
+
+enum Metric {
+  distance,
+  time
+}
+
+class WorkoutStep {
+  StepType type;
+  Metric metric = Metric.time;
+  double metricValue = 0;
+
+  WorkoutStep(this.type, this.metric, this.metricValue);
+
+  
+}
